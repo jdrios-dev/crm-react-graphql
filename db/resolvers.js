@@ -188,3 +188,6 @@ const resolvers = {
 }
 
 module.exports = resolvers;
+//.env
+//DB_MONGO=mongodb+srv://Mrdaniel01:Mrdaniel01@cluster0.z3q55.mongodb.net/CRMGraphql
+//SECRETA=3s7o3s6*na53k3r/Pa1bra%5ecr3ta
