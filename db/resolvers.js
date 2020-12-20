@@ -2,20 +2,22 @@ const Usuario = require('../models/Usuario');
 const Producto = require('../models/Producto');
 const Cliente = require('../models/Cliente');
 const Pedido = require('../models/Pedido');
+
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.env' });
 
 const crearToken = (usuario, secreta, expiresIn) => {
-  const { id, email, nombre, apelido } = usuario;
+  const { id, email, nombre, apellido } = usuario;
 
-  return jwt.sign({ id, email, nombre, apelido  }, secreta, { expiresIn })
+  return jwt.sign({ id, email, nombre, apellido  }, secreta, { expiresIn })
 }
 
 //Resolvers
 const resolvers = {
+
   Query: {
-    obtenerUsuario: async (_, {  }, ctx) => {
+    obtenerUsuario: async (_, {}, ctx) => {
       return ctx.usuario;
     },
     obtenerProductos: async () => {
@@ -366,6 +368,3 @@ const resolvers = {
 }
 
 module.exports = resolvers;
-//.env
-//DB_MONGO=mongodb+srv://Mrdaniel01:Mrdaniel01@cluster0.z3q55.mongodb.net/CRMGraphql
-//SECRETA=3s7o3s6*na53k3r/Pa1bra%5ecr3ta

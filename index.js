@@ -4,33 +4,38 @@ const resolvers = require('./db/resolvers');
 const conectarDB = require('./config/db');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.env' });
-//Conectar Base de Datos
+
+// Conectar a la base de datos
 conectarDB();
 
-
-//server
+// servidor
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({req}) => {
-    //console.log(req.headers['authorization']);
+	typeDefs,
+	resolvers,
+	context: ({ req }) => {
+		//console.log(req.headers['authorization'])
 
-    const token = req.headers['authorization'] || '';
-    if(token){
-      try {
-        const usuario = jwt.verify(token.replace('Bearer ', ''), process.env.SECRETA);
-        return {
-          usuario
-        }
-      } catch (error) {
-        console.log('Hubo un error.');
-        console.log(error);
-      }
-    }
-  }
+		//console.log(req.headers);
+
+		const token = req.headers['authorization'] || '';
+		//console.log(token);
+		if (token) {
+			try {
+				const usuario = jwt.verify(token.replace('Bearer ', ''), process.env.SECRETA);
+				//console.log(process.env.SECRETA);
+				//console.log(usuario);
+				return {
+					usuario
+				}
+			} catch (error) {
+				console.log('Hubo un error');
+				console.log(error);
+			}
+		}
+	}
 });
 
 //Init server
-server.listen().then(({url}) => {
-  console.log(`Servidor listo en la URL ${url}`);
+server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+	console.log(`Servidor listo en la URL ${url}`)
 })
